@@ -176,23 +176,6 @@
   </div>
 </div>
 
-<!-- MODAL double vérification reset all -->
-<div id="resetModal" class="modalBackdrop hidden" role="dialog" aria-modal="true" aria-label="Réinitialiser">
-  <div class="modal">
-    <h3>Double vérification</h3>
-    <p class="sub">
-      Cette action supprime toutes les coches enregistrées sur cet appareil (tous niveaux).
-      Pour confirmer, tape <b class="mono">RESET</b> ci-dessous puis valide.
-    </p>
-    <input id="resetInput" type="text" class="mono" placeholder="Tape RESET…" autocomplete="off" />
-    <div class="row" style="margin-top:12px; gap:10px">
-      <button class="btn secondary" id="cancelReset">Annuler</button>
-      <button class="btn bad" id="confirmReset" aria-disabled="true">Je confirme : tout effacer</button>
-    </div>
-    <div class="foot">Astuce : si tu veux seulement repartir sur une journée/semaine, utilise les boutons correspondants.</div>
-  </div>
-</div>
-
 <script>
 (() => {
   // --- Période Carême 2026 (verrouillée)
@@ -765,39 +748,18 @@
     renderAll();
   });
 
-  // --- Double verification reset all
-  const modal = $("resetModal");
-  const resetInput = $("resetInput");
-  const confirmReset = $("confirmReset");
+  // --- Reset total (simple et fiable)
+$("resetAll").addEventListener("click", () => {
+  const ok = confirm("Êtes-vous sûr de vouloir tout réinitialiser ?\n\nCette action effacera toutes les coches enregistrées sur cet appareil.");
+  if(!ok) return;
 
-  function openResetModal(){
-    resetInput.value = "";
-    confirmReset.setAttribute("aria-disabled","true");
-    modal.classList.remove("hidden");
-    setTimeout(() => resetInput.focus(), 50);
-  }
-  function closeResetModal(){ modal.classList.add("hidden"); }
+  localStorage.removeItem(KEY);
+  state = { level: 1, days:{}, weeks:{}, season:{}, periodic:{} };
+  save(state);
 
-  $("resetAll").addEventListener("click", openResetModal);
-  $("cancelReset").addEventListener("click", closeResetModal);
-
-  resetInput.addEventListener("input", () => {
-    const ok = resetInput.value.trim().toUpperCase() === "RESET";
-    confirmReset.setAttribute("aria-disabled", ok ? "false" : "true");
-  });
-
-  confirmReset.addEventListener("click", () => {
-    if(confirmReset.getAttribute("aria-disabled") === "true") return;
-    const ok = confirm("Dernière vérification : effacer toutes les données de cette appli sur cet appareil ?");
-    if(!ok) return;
-
-    localStorage.removeItem(KEY);
-    state = { level: 1, days:{}, weeks:{}, season:{}, periodic:{} };
-    save(state);
-    $("levelSelect").value = "1";
-    closeResetModal();
-    renderAll();
-  });
+  $("levelSelect").value = "1";
+  renderAll();
+});
 
   // init
   $("levelSelect").value = String(state.level || 1);
