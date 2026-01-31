@@ -6,7 +6,7 @@
   <title>Carême 2026 – Objectifs</title>
   <style>
     :root{
-      --bg:#0b1220; --card:#111a2e; --text:#e8eefc; --muted:#a7b4d6;
+      --bg:#0b1220; --text:#e8eefc; --muted:#a7b4d6;
       --accent:#7aa2ff; --ok:#4ade80; --warn:#fbbf24; --bad:#fb7185;
       --line:rgba(255,255,255,.10);
     }
@@ -17,7 +17,7 @@
       border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
     h1{ font-size:20px; margin:0 0 6px; }
     h2{ font-size:14px; margin:14px 0 8px; color:var(--muted); font-weight:800; }
-    .sub{ color:var(--muted); font-size:13px; margin:0 0 10px; line-height:1.45; }
+    .sub{ color:var(--muted); font-size:13px; margin:0 0 10px; line-height:1.5; }
     .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
     .pill{ font-size:12px; color:var(--muted); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
     .btn{ background:rgba(122,162,255,.14); color:var(--text); border:1px solid rgba(122,162,255,.35);
@@ -30,7 +30,7 @@
     .progress{ width:100%; height:10px; background:rgba(255,255,255,.10); border-radius:999px; overflow:hidden; }
     .bar{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--ok)); transition:width .25s ease; }
     .grid{ display:grid; gap:12px; }
-    @media (min-width: 940px){ .grid{ grid-template-columns:1.1fr .9fr; } }
+    @media (min-width: 920px){ .grid{ grid-template-columns:1.15fr .85fr; } }
 
     ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
     li{ display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:12px;
@@ -42,38 +42,32 @@
     .tag{ display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-left:6px; }
 
     .section{ padding:12px; border-radius:14px; border:1px solid var(--line); background:rgba(0,0,0,.12); }
-    .foot{ margin-top:10px; color:var(--muted); font-size:12px; line-height:1.45; }
+    .foot{ margin-top:10px; color:var(--muted); font-size:12px; line-height:1.5; }
     .hr{ height:1px; background:var(--line); margin:12px 0; }
 
-    select, textarea, input[type="text"]{
+    select, input[type="text"]{
       background:rgba(0,0,0,.18); color:var(--text);
       border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:10px 12px; font:inherit;
     }
-    select{ padding-right:34px; }
-    textarea{ width:100%; min-height:120px; }
+
     .quote{ padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); }
     .quote b{ font-weight:900; }
     .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     .hidden{ display:none; }
 
-    /* Modal */
-    .modal-backdrop{
+    /* Mini modal */
+    .modalBackdrop{
       position:fixed; inset:0; background:rgba(0,0,0,.55);
-      display:none; align-items:center; justify-content:center; padding:16px;
+      display:flex; align-items:center; justify-content:center; padding:18px;
     }
     .modal{
-      width:min(560px, 100%);
-      background:rgba(17,26,46,.98);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:16px; padding:14px;
-      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      max-width:520px; width:100%;
+      background:rgba(17,26,46,.98); border:1px solid rgba(255,255,255,.12);
+      border-radius:16px; padding:14px; box-shadow:0 20px 60px rgba(0,0,0,.45);
     }
-    .modal h3{ margin:0 0 8px; font-size:16px; }
-    .modal p{ margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.45; }
-    .modal .row{ justify-content:flex-end; }
-    .modal input[type="text"]{ width:100%; margin-top:6px; }
-    .modal .danger-note{ color:var(--bad); font-weight:700; }
-    .modal-backdrop.show{ display:flex; }
+    .modal h3{ margin:0 0 6px; font-size:16px; }
+    .modal .sub{ margin:0 0 10px; }
+    .modal .row{ justify-content:flex-start; }
   </style>
 </head>
 
@@ -88,25 +82,20 @@
       <div class="pill" id="rangeLabel"></div>
     </div>
 
-    <!-- Accueil pastoral + citation du niveau + parole courte -->
+    <!-- Accueil pastoral + citation du niveau -->
     <div class="quote" style="margin-top:10px">
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between">
         <div style="flex:1; min-width:260px">
-          <b>Bienvenue</b> 👋<br/>
+          <b>Accueil</b> 🙏<br/>
           <span class="sub" style="margin:6px 0 0; display:block">
-            Ce Carême, avançons pas à pas : prière, sobriété, charité. Le but n’est pas la performance,
-            mais la fidélité du cœur. Un jour à la fois.
+            Bienvenue dans ce chemin de Carême. Ici, on avance avec réalisme et confiance :
+            un jour à la fois, pour grandir en prière, sobriété et charité.
           </span>
         </div>
         <div style="flex:1; min-width:260px">
           <b id="levelTitle">Niveau</b><br/>
-          <span class="sub" id="levelQuote" style="margin:6px 0 0; display:block"></span>
+          <span class="sub" id="levelVerse" style="margin:6px 0 0; display:block"></span>
         </div>
-      </div>
-      <div class="hr"></div>
-      <div>
-        <b>Parole du jour</b><br/>
-        <span class="sub" id="shortQuote" style="margin:6px 0 0; display:block"></span>
       </div>
     </div>
 
@@ -114,15 +103,10 @@
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
         <span class="pill">Niveau</span>
         <select id="levelSelect" aria-label="Niveau">
-          <option value="mustard">Le grain de sénevé</option>
-          <option value="vine">Le cep et les sarments</option>
-          <option value="fire">Feu dévorant</option>
+          <option value="1">Le grain de sénevé</option>
+          <option value="2">Le cep et les sarments</option>
+          <option value="3">Feu dévorant</option>
         </select>
-
-        <label class="pill" style="display:flex; gap:8px; align-items:center">
-          <input id="animatorToggle" type="checkbox" style="transform:scale(1.1); margin:0" />
-          Mode animateur
-        </label>
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
@@ -150,9 +134,7 @@
       <div class="section">
         <h2>Objectifs du jour</h2>
         <ul id="todayTasks"></ul>
-
         <div class="foot" id="dayHint"></div>
-
         <div class="row" style="margin-top:12px; justify-content:flex-start; gap:10px">
           <button class="btn warn" id="resetDay">Réinitialiser le jour</button>
         </div>
@@ -165,7 +147,7 @@
 
         <div class="hr"></div>
 
-        <h2>Objectifs sur le Carême</h2>
+        <h2>Avant Pâques / sur la durée</h2>
         <ul id="seasonTasks"></ul>
 
         <div class="row" style="margin-top:12px; justify-content:flex-start; gap:10px">
@@ -174,194 +156,149 @@
         </div>
 
         <div class="foot">
-          “Semaine” = lundi → dimanche. Les objectifs s’adaptent au niveau choisi.
-          Les coches sont enregistrées sur l’appareil (pas de compte).
+          “Semaine” = lundi → dimanche. Le bouton AELF ouvre la messe du jour.
         </div>
       </div>
     </div>
 
-    <!-- MODE ANIMATEUR -->
-    <div class="section hidden" id="animatorPanel" style="margin-top:12px">
-      <h2>Mode animateur – Suivi de groupe (sans serveur)</h2>
-      <div class="sub">
-        Chaque participant peut générer un <b>code de partage</b> (stats uniquement).<br/>
-        Colle ici plusieurs codes (un par ligne) pour obtenir une moyenne de groupe.
-      </div>
-
-      <div class="row" style="align-items:flex-start">
-        <div style="flex:1; min-width:280px">
-          <button class="btn" id="makeShareCode">Générer mon code de partage</button>
-          <div class="foot">Le code ne contient pas de nom. Il inclut le niveau + des %.</div>
-          <textarea id="shareCodeOut" class="mono" readonly placeholder="Ton code apparaîtra ici…"></textarea>
-        </div>
-
-        <div style="flex:1; min-width:280px">
-          <textarea id="shareCodesIn" class="mono" placeholder="Colle ici les codes (un par ligne)…"></textarea>
-          <div class="row" style="justify-content:flex-start; gap:10px; margin-top:10px">
-            <button class="btn" id="computeGroup">Calculer la moyenne du groupe</button>
-            <button class="btn secondary" id="clearGroup">Effacer</button>
-          </div>
-
-          <div class="quote" style="margin-top:10px">
-            <div><b>Résultat groupe</b></div>
-            <div class="sub" id="groupResult" style="margin-top:6px">Aucun calcul pour l’instant.</div>
-          </div>
-        </div>
-      </div>
+    <!-- Image en bas -->
+    <div class="hr"></div>
+    <div class="section" style="text-align:center">
+      <h2>Parcours</h2>
+      <img
+        src="parcours-christus.png"
+        alt="Parcours Christus"
+        style="width:100%; max-width:520px; height:auto; border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.10);"
+      />
+      <div class="foot">Tu peux enregistrer cette page sur l’écran d’accueil pour l’utiliser comme une appli.</div>
     </div>
 
   </div>
 </div>
 
-<!-- MODAL DOUBLE CONFIRM RESET -->
-<div class="modal-backdrop" id="resetModal">
+<!-- MODAL double vérification reset all -->
+<div id="resetModal" class="modalBackdrop hidden" role="dialog" aria-modal="true" aria-label="Réinitialiser">
   <div class="modal">
-    <h3>Réinitialisation totale</h3>
-    <p>
-      <span class="danger-note">Attention :</span> cela efface toutes les coches enregistrées sur cet appareil,
-      pour tous les jours et toutes les semaines, et pour tous les niveaux.
+    <h3>Double vérification</h3>
+    <p class="sub">
+      Cette action supprime toutes les coches enregistrées sur cet appareil (tous niveaux).
+      Pour confirmer, tape <b class="mono">RESET</b> ci-dessous puis valide.
     </p>
-    <p>
-      1) Clique sur <b>Continuer</b><br/>
-      2) Puis tape <b class="mono">EFFACER</b> pour confirmer.
-    </p>
-    <input id="resetConfirmInput" type="text" class="mono" placeholder="Tape EFFACER pour confirmer…" />
+    <input id="resetInput" type="text" class="mono" placeholder="Tape RESET…" autocomplete="off" />
     <div class="row" style="margin-top:12px; gap:10px">
-      <button class="btn secondary" id="resetCancel">Annuler</button>
-      <button class="btn warn" id="resetContinue">Continuer</button>
-      <button class="btn bad" id="resetDoIt" aria-disabled="true">Oui, tout effacer</button>
+      <button class="btn secondary" id="cancelReset">Annuler</button>
+      <button class="btn bad" id="confirmReset" aria-disabled="true">Je confirme : tout effacer</button>
     </div>
+    <div class="foot">Astuce : si tu veux seulement repartir sur une journée/semaine, utilise les boutons correspondants.</div>
   </div>
 </div>
 
 <script>
 (() => {
-  // --- Carême 2026 (verrouillé)
+  // --- Période Carême 2026 (verrouillée)
   const START = new Date("2026-02-18T00:00:00"); // Mercredi des Cendres
   const END   = new Date("2026-04-05T00:00:00"); // Dimanche de Pâques
 
-  const KEY = "careme_2026_custom_levels_v2";
+  const KEY = "careme_2026_custom_levels_v3";
   const $ = (id) => document.getElementById(id);
 
-  // --- AELF URL
+  // --- AELF URL (messe du jour)
   function aelfUrl(iso){ return `https://www.aelf.org/${iso}/romain/messe`; }
 
-  // --- Courtes paroles (rotation)
-  const SHORT_QUOTES = [
-    "« Aujourd’hui, si vous écoutez sa voix, n’endurcissez pas votre cœur. » (Ps 94/95)",
-    "« Cherchez d’abord le Royaume de Dieu. » (Mt 6,33)",
-    "« Seigneur, apprends-nous à prier. » (Lc 11,1)",
-    "« Heureux les miséricordieux. » (Mt 5,7)",
-    "« Demeurez en mon amour. » (Jn 15,9)",
-    "« Mon joug est facile à porter. » (Mt 11,30)",
-    "« Je suis avec vous tous les jours. » (Mt 28,20)"
-  ];
-
-  // --- TES 3 NIVEAUX (tels que donnés)
-  // scope:
-  // - daily : à faire chaque jour
-  // - friday : à faire le vendredi (ou vendredis)
-  // - weekday : certains jours (ex: mercredi+vendredi)
-  // - weekly : 1x par semaine
-  // - season : sur le Carême
-  // - biweekly15 : tous les 15 jours (approximation simple: coche "période" ; on garde en "weekly" + note)
-  //
-  // Remarque: pour "Confession chaque 15 jours" / "Messe quotidienne si possible" etc.
-  // On les propose comme objectifs cochables (daily/weekly/season), sans forcer une logique complexe.
-  // (Sinon, ça devient une usine. Ici, c’est simple, motivant, et fidèle au texte.)
-  const LEVELS = {
-    mustard: {
+  // --- Niveaux + versets
+  const LEVEL_META = {
+    1: {
       name: "Le grain de sénevé",
-      quote: "« Le Royaume des cieux est comparable à un grain de sénevé qu’un homme a semé dans son champ… » (Mt 13,31-32)",
+      verse: "« Le Royaume des cieux est comparable à un grain de sénevé qu’un homme a semé dans son champ… » (Mt 13,31-32)"
+    },
+    2: {
+      name: "Le cep et les sarments",
+      verse: "« Celui qui demeure en moi et en qui je demeure porte beaucoup de fruit… » (Jn 15,5)"
+    },
+    3: {
+      name: "Feu dévorant",
+      verse: "« Notre Dieu est un feu dévorant. » (He 12,29)"
+    }
+  };
+
+  // --- Objectifs
+  const LEVELS = {
+    1: {
       daily: [
         { id:"oraison", label:"Oraison : 15 minutes", cat:"Discipline spirituelle" },
-        { id:"dizaine", label:"Chapelet : au moins une dizaine", cat:"Discipline spirituelle" },
-        { id:"lecture", label:"Lecture spirituelle : Évangile / liturgie du jour", cat:"Discipline spirituelle" },
-        { id:"sobriete", label:"Sobriété numérique : pas après 21h (réseaux/vidéos)", cat:"Ascèse" },
-        { id:"sommeil", label:"Sommeil : viser au moins 7h", cat:"Ascèse" }
+        { id:"chapelet", label:"Chapelet : au moins une dizaine", cat:"Discipline spirituelle" },
+        { id:"lecture", label:"Lecture spirituelle : Évangile ou liturgie du jour", cat:"Discipline spirituelle" },
+        { id:"sobriete", label:"Sobriété numérique : pas après 21h", cat:"Ascèse" },
+        { id:"sommeil", label:"Sommeil : viser au moins 7h", cat:"Ascèse" },
       ],
-      fridayOnly: [
-        { id:"jeune", label:"Jeûne : 1 jour/semaine (vendredi)", cat:"Ascèse" },
-        { id:"abstinence", label:"Abstinence : viande (vendredi)", cat:"Ascèse" }
+      weekdayOnly: [
+        { id:"jeune_vendredi", label:"Jeûne : 1 jour/semaine (vendredi)", cat:"Ascèse", days:[5] },
+        { id:"abstinence_vendredi", label:"Abstinence : le vendredi (viande)", cat:"Ascèse", days:[5] },
       ],
       weekly: [
-        { id:"aumone", label:"Aumône : 1 geste concret (don/service/temps)", cat:"Charité & fraternité" },
-        { id:"fraternite", label:"Fraternité : partager 1x avec binôme/ami/groupe", cat:"Charité & fraternité" }
+        { id:"aumone", label:"Aumône : 1 geste concret", cat:"Charité & fraternité" },
+        { id:"fraternite", label:"Fraternité : partager 1 fois dans la semaine", cat:"Charité & fraternité" },
       ],
       season: [
-        { id:"confession", label:"Confession : au moins 1 fois avant Pâques", cat:"Discipline spirituelle" }
-      ]
+        { id:"confession", label:"Confession : au moins 1 fois avant Pâques", cat:"Discipline spirituelle" },
+      ],
+      periodic: []
     },
 
-    vine: {
-      name: "Le cep et les sarments",
-      quote: "« Celui qui demeure en moi et en qui je demeure porte beaucoup de fruit… » (Jn 15,5)",
+    2: {
       daily: [
         { id:"oraison", label:"Oraison : 30 minutes", cat:"Discipline spirituelle" },
-        { id:"lecture20", label:"Lecture/formation : 20 min", cat:"Discipline spirituelle" },
+        { id:"lecture_20", label:"Lecture/formation : 20 minutes", cat:"Discipline spirituelle" },
         { id:"examen", label:"Examen de conscience : chaque soir", cat:"Discipline spirituelle" },
-        { id:"sobriete_strict", label:"Sobriété numérique : pas de divertissement (sauf nécessaire)", cat:"Ascèse" },
-        { id:"douche", label:"Douches tempérées ou froides (selon possibilité)", cat:"Ascèse" },
-        { id:"sommeil", label:"Sommeil : 7h", cat:"Ascèse" }
+        { id:"sobriete_strict", label:"Sobriété numérique : pas de réseaux sociaux/vidéos (sauf nécessaire)", cat:"Ascèse" },
+        { id:"douche_temperee", label:"Douches tempérées ou froides (selon possibilité)", cat:"Ascèse" },
+        { id:"sommeil", label:"Sommeil : 7h/nuit", cat:"Ascèse" },
       ],
-      // Ici: Jeûne 2 jours/semaine (mercredi et vendredi)
-      weekdayOnly: {
-        days: [3,5], // 0=dimanche.. 3=mercredi.. 5=vendredi
-        label: "Mercredi & Vendredi",
-        tasks: [
-          { id:"jeune_mf", label:"Jeûne : aujourd’hui (mercredi/vendredi)", cat:"Ascèse" }
-        ]
-      },
-      // Abstinence: tous les vendredis + un autre jour choisi
-      fridayOnly: [
-        { id:"abstinence_v", label:"Abstinence : vendredi", cat:"Ascèse" }
+      weekdayOnly: [
+        { id:"jeune_mercredi", label:"Jeûne : mercredi", cat:"Ascèse", days:[3] },
+        { id:"jeune_vendredi", label:"Jeûne : vendredi", cat:"Ascèse", days:[5] },
+        { id:"abstinence_vendredi", label:"Abstinence : tous les vendredis", cat:"Ascèse", days:[5] },
+        { id:"abstinence_autre", label:"Abstinence : un autre jour choisi", cat:"Ascèse", days:[0,1,2,3,4,6] },
       ],
       weekly: [
-        { id:"chapelet_complet", label:"Chapelet : un chapelet complet/semaine (ou plus)", cat:"Discipline spirituelle" },
-        { id:"abstinence_plus", label:"Abstinence : un autre jour choisi (en plus du vendredi)", cat:"Ascèse" },
-        { id:"sport2", label:"Exercice physique : 2 séances", cat:"Ascèse" },
-        { id:"aumone2h", label:"Aumône/service : au moins 2h", cat:"Charité & fraternité" },
-        { id:"fraternite_groupe", label:"Fraternité : réunion hebdo (prière/soutien)", cat:"Charité & fraternité" }
+        { id:"chapelet_complet", label:"Chapelet : 1 chapelet complet/semaine (ou quotidien si possible)", cat:"Discipline spirituelle" },
+        { id:"sport_2", label:"Exercice physique : 2 séances/semaine", cat:"Ascèse" },
+        { id:"aumone_2h", label:"Aumône : au moins 2h de service/charité", cat:"Charité & fraternité" },
+        { id:"fraternite_groupe", label:"Fraternité : réunion hebdomadaire (binôme/groupe)", cat:"Charité & fraternité" },
       ],
       season: [
-        { id:"confession2", label:"Confession : 2 fois (dont 1 avant Semaine Sainte)", cat:"Discipline spirituelle" }
-      ]
+        { id:"confession_2", label:"Confession : 2 fois durant le Carême (≥ 1 avant la Semaine Sainte)", cat:"Discipline spirituelle" },
+      ],
+      periodic: []
     },
 
-    fire: {
-      name: "Feu dévorant",
-      quote: "« Notre Dieu est un feu dévorant. » (He 12,29)",
+    3: {
       daily: [
-        { id:"oraison1h", label:"Oraison : 1h (heure sainte)", cat:"Discipline spirituelle" },
-        { id:"chapelet_q", label:"Chapelet : quotidien (intégral si possible)", cat:"Discipline spirituelle" },
-        { id:"lecture30", label:"Lecture spirituelle : 30 min (Écriture + auteur)", cat:"Discipline spirituelle" },
-        { id:"examen_pro", label:"Examen de conscience : approfondi (écrit si possible)", cat:"Discipline spirituelle" },
-        { id:"sobriete_rad", label:"Sobriété numérique radicale : téléphone essentiel uniquement", cat:"Ascèse" },
-        { id:"douche_f", label:"Douche froide quotidienne", cat:"Ascèse" },
-        { id:"sommeil7", label:"Sommeil : jamais moins de 7h", cat:"Ascèse" }
+        { id:"oraison_1h", label:"Oraison : 1h/jour (style heure sainte)", cat:"Discipline spirituelle" },
+        { id:"chapelet_quot", label:"Chapelet : quotidien, intégral si possible", cat:"Discipline spirituelle" },
+        { id:"lecture_30", label:"Lecture spirituelle : 30 min (Écriture + auteur)", cat:"Discipline spirituelle" },
+        { id:"examen_prof", label:"Examen approfondi : chaque soir (écrit si possible)", cat:"Discipline spirituelle" },
+        { id:"sobriete_rad", label:"Sobriété numérique radicale : téléphone pour l’essentiel", cat:"Ascèse" },
+        { id:"douche_froide", label:"Douche froide quotidienne", cat:"Ascèse" },
+        { id:"sommeil_reg", label:"Sommeil : régulier, jamais < 7h", cat:"Ascèse" },
+        { id:"aumone_1h", label:"Aumône/service : 1h/jour", cat:"Charité & fraternité" },
+        { id:"checkin_quot", label:"Fraternité : check-in quotidien avec un compagnon", cat:"Charité & fraternité" },
       ],
-      // Jeûne : tous les jours du Carême sauf dimanches/solennités -> on coche chaque jour (sauf dimanche)
-      // (Ici on applique "sauf dimanches" automatiquement)
-      fastingRule: {
-        enabled: true,
-        id: "jeune_quotidien",
-        label: "Jeûne : aujourd’hui (sauf dimanche) — 1 repas + 2 collations légères, sans viande",
-        cat: "Ascèse"
-      },
-      fridayOnly: [
-        { id:"abstinence_strict", label:"Abstinence stricte : viande (vendredi)", cat:"Ascèse" }
+      weekdayOnly: [
+        { id:"jeune_tous", label:"Jeûne : tous les jours du Carême (sauf dimanches/solennités)", cat:"Ascèse", days:[1,2,3,4,5,6] },
+        { id:"abstinence_vendredi", label:"Abstinence stricte : viande tous les vendredis", cat:"Ascèse", days:[5] },
       ],
       weekly: [
-        { id:"adoration", label:"Adoration : au moins 1 fois", cat:"Discipline spirituelle" },
-        { id:"messe", label:"Messe : quotidienne si possible (objectif semaine)", cat:"Discipline spirituelle" },
-        { id:"sport3", label:"Exercice physique : 3 fois", cat:"Ascèse" },
-        { id:"service1h_j", label:"Aumône/service : 1h par jour (objectif semaine)", cat:"Charité & fraternité" },
-        { id:"checkin_q", label:"Fraternité : check-in quotidien (objectif semaine)", cat:"Charité & fraternité" },
-        { id:"rencontre_g", label:"Fraternité : rencontre hebdo de groupe", cat:"Charité & fraternité" },
-        { id:"accompagnement", label:"Accompagnement spirituel : régulier", cat:"Charité & fraternité" }
+        { id:"adoration", label:"Adoration : au moins 1 fois/semaine", cat:"Discipline spirituelle" },
+        { id:"messe", label:"Messe : quotidienne si possible (au moins 1 fois/semaine en plus du dimanche)", cat:"Discipline spirituelle" },
+        { id:"sport_3", label:"Exercice physique : 3 fois/semaine", cat:"Ascèse" },
+        { id:"fraternite_groupe", label:"Fraternité : rencontre hebdomadaire de groupe", cat:"Charité & fraternité" },
+        { id:"accompagnement", label:"Accompagnement spirituel : régulier", cat:"Charité & fraternité" },
+        { id:"privation_autre", label:"Autre privation choisie (alcool/sucreries/etc.) – tenir la semaine", cat:"Ascèse" },
       ],
-      season: [
-        { id:"confession15", label:"Confession : chaque 15 jours (cocher quand c’est fait)", cat:"Discipline spirituelle" }
+      season: [],
+      periodic: [
+        { id:"confession_15j", label:"Confession : chaque 15 jours", cat:"Discipline spirituelle", everyDays:15 }
       ]
     }
   };
@@ -383,9 +320,7 @@
   function addDays(d, n){
     const x = new Date(d); x.setDate(x.getDate()+n); x.setHours(0,0,0,0); return x;
   }
-  function dayOfWeek(d){ return new Date(d).getDay(); } // 0 dimanche .. 6 samedi
-  function isFriday(d){ return dayOfWeek(d) === 5; }
-  function isSunday(d){ return dayOfWeek(d) === 0; }
+  function dayOfWeek(d){ return new Date(d).getDay(); } // 0 Sun .. 6 Sat
   function startOfWeekMonday(d){
     const x = new Date(d); x.setHours(0,0,0,0);
     const day = x.getDay();
@@ -404,6 +339,9 @@
     const d = new Date(iso+"T00:00:00");
     return d >= START && d <= END;
   }
+  function daysBetween(a,b){
+    return Math.round((b - a)/(1000*60*60*24));
+  }
 
   // --- Storage
   function load(){
@@ -412,60 +350,48 @@
   }
   function save(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
 
-  // state schema:
-  // state.level = "mustard"|"vine"|"fire"
-  // state.days[iso][level] = { daily:{id:bool}, extra:{id:bool} }
-  // state.weeks[weekIsoMonday][level] = { weekly:{id:bool} }
-  // state.season[level] = { id: bool }
   let state = load();
-  if(!state.level) state.level = "mustard";
+  if(!state.level) state.level = 1;
   if(!state.days) state.days = {};
   if(!state.weeks) state.weeks = {};
   if(!state.season) state.season = {};
+  if(!state.periodic) state.periodic = {};
+
+  function lvl(){ return String(state.level); }
 
   function ensureDay(iso, level){
     if(!state.days[iso]) state.days[iso] = {};
-    if(!state.days[iso][level]) state.days[iso][level] = { daily:{}, extra:{} };
+    if(!state.days[iso][level]) state.days[iso][level] = { daily:{}, weekdayOnly:{} };
 
-    const L = LEVELS[level];
-
-    (L.daily || []).forEach(t => {
+    LEVELS[level].daily.forEach(t => {
       if(typeof state.days[iso][level].daily[t.id] !== "boolean") state.days[iso][level].daily[t.id] = false;
     });
 
-    // fridayOnly -> stocké dans extra
-    (L.fridayOnly || []).forEach(t => {
-      if(typeof state.days[iso][level].extra[t.id] !== "boolean") state.days[iso][level].extra[t.id] = false;
+    LEVELS[level].weekdayOnly.forEach(t => {
+      if(typeof state.days[iso][level].weekdayOnly[t.id] !== "boolean") state.days[iso][level].weekdayOnly[t.id] = false;
     });
-
-    // weekdayOnly tasks -> stocké dans extra
-    if(L.weekdayOnly && Array.isArray(L.weekdayOnly.tasks)){
-      L.weekdayOnly.tasks.forEach(t => {
-        if(typeof state.days[iso][level].extra[t.id] !== "boolean") state.days[iso][level].extra[t.id] = false;
-      });
-    }
-
-    // fasting rule -> stocké dans extra
-    if(L.fastingRule && L.fastingRule.enabled){
-      const t = L.fastingRule;
-      if(typeof state.days[iso][level].extra[t.id] !== "boolean") state.days[iso][level].extra[t.id] = false;
-    }
   }
 
   function ensureWeek(weekIso, level){
     if(!state.weeks[weekIso]) state.weeks[weekIso] = {};
     if(!state.weeks[weekIso][level]) state.weeks[weekIso][level] = { weekly:{} };
-    const L = LEVELS[level];
-    (L.weekly || []).forEach(t => {
+
+    LEVELS[level].weekly.forEach(t => {
       if(typeof state.weeks[weekIso][level].weekly[t.id] !== "boolean") state.weeks[weekIso][level].weekly[t.id] = false;
     });
   }
 
   function ensureSeason(level){
-    if(!state.season[level]) state.season[level] = {};
-    const L = LEVELS[level];
-    (L.season || []).forEach(t => {
-      if(typeof state.season[level][t.id] !== "boolean") state.season[level][t.id] = false;
+    if(!state.season[level]) state.season[level] = { season:{} };
+    LEVELS[level].season.forEach(t => {
+      if(typeof state.season[level].season[t.id] !== "boolean") state.season[level].season[t.id] = false;
+    });
+  }
+
+  function ensurePeriodic(level){
+    if(!state.periodic[level]) state.periodic[level] = { periodic:{} };
+    LEVELS[level].periodic.forEach(t => {
+      if(!state.periodic[level].periodic[t.id]) state.periodic[level].periodic[t.id] = {};
     });
   }
 
@@ -474,97 +400,74 @@
     return { ws, we: addDays(ws,6), key: toISODate(ws) };
   }
 
-  // --- Current day
   let current = clampToRange(new Date());
-
-  function currentLevel(){ return state.level; }
-
-  function setShortQuote(){
-    const daysFromStart = Math.floor((current - START) / (1000*60*60*24));
-    const q = SHORT_QUOTES[(daysFromStart % SHORT_QUOTES.length + SHORT_QUOTES.length) % SHORT_QUOTES.length];
-    $("shortQuote").textContent = q;
-  }
-
-  function updateLevelHeader(){
-    const level = currentLevel();
-    const L = LEVELS[level];
-    $("levelTitle").textContent = `Niveau : ${L.name}`;
-    $("levelQuote").textContent = L.quote;
-  }
 
   function updateHeader(){
     const iso = toISODate(current);
     $("dateLabel").textContent = formatFR(current);
     $("rangeLabel").textContent = `Du ${formatShortFR(START)} au ${formatShortFR(END)} (Carême 2026)`;
     $("aelfLink").href = aelfUrl(iso);
+
     $("prevDay").setAttribute("aria-disabled", current <= START ? "true" : "false");
     $("nextDay").setAttribute("aria-disabled", current >= END ? "true" : "false");
-    setShortQuote();
-    updateLevelHeader();
+
+    const meta = LEVEL_META[parseInt(state.level,10)];
+    $("levelTitle").textContent = meta.name;
+    $("levelVerse").textContent = meta.verse;
+  }
+
+  function tasksTodayFor(level, date){
+    const out = [];
+    LEVELS[level].daily.forEach(t => out.push({ ...t, scope:"daily" }));
+    const dow = dayOfWeek(date);
+    LEVELS[level].weekdayOnly.forEach(t => {
+      if(t.days && t.days.includes(dow)){
+        let extra = null;
+        if(dow === 5) extra = "Vendredi";
+        else if(dow === 3) extra = "Mercredi";
+        else extra = "Jour";
+        out.push({ ...t, scope:"weekdayOnly", extra });
+      }
+    });
+    return out;
   }
 
   function renderToday(){
-    const level = currentLevel();
-    const L = LEVELS[level];
+    const level = lvl();
     const iso = toISODate(current);
     ensureDay(iso, level);
 
     const list = $("todayTasks");
     list.innerHTML = "";
 
-    const tasks = [];
-    (L.daily || []).forEach(t => tasks.push({ ...t, scope:"daily" }));
-
-    // Friday-only
-    if(isFriday(current) && (L.fridayOnly || []).length){
-      (L.fridayOnly || []).forEach(t => tasks.push({ ...t, scope:"extra", extraTag:"Vendredi" }));
-    }
-
-    // Weekday-only (ex mercredi+vendredi)
-    if(L.weekdayOnly && Array.isArray(L.weekdayOnly.days) && Array.isArray(L.weekdayOnly.tasks)){
-      if(L.weekdayOnly.days.includes(dayOfWeek(current))){
-        L.weekdayOnly.tasks.forEach(t => tasks.push({ ...t, scope:"extra", extraTag:L.weekdayOnly.label }));
-      }
-    }
-
-    // Fire fasting rule: show every day except Sundays
-    if(L.fastingRule && L.fastingRule.enabled){
-      if(!isSunday(current)){
-        const t = L.fastingRule;
-        tasks.push({ id:t.id, label:t.label, cat:t.cat, scope:"extra", extraTag:"Règle" });
-      }
-    }
-
+    const tasks = tasksTodayFor(level, current);
     tasks.forEach(t => {
       const li = document.createElement("li");
       const cb = document.createElement("input");
       cb.type = "checkbox";
-
       cb.checked = (t.scope === "daily")
         ? state.days[iso][level].daily[t.id]
-        : state.days[iso][level].extra[t.id];
+        : state.days[iso][level].weekdayOnly[t.id];
 
       cb.addEventListener("change", () => {
         if(t.scope === "daily") state.days[iso][level].daily[t.id] = cb.checked;
-        else state.days[iso][level].extra[t.id] = cb.checked;
+        else state.days[iso][level].weekdayOnly[t.id] = cb.checked;
         save(state);
         updateProgress();
       });
 
       const div = document.createElement("div");
       div.className = "task";
-
       const b = document.createElement("b");
       b.textContent = t.label;
-
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent = t.cat;
 
-      if(t.extraTag){
+      if(t.extra){
         const span = document.createElement("span");
         span.className = "tag";
-        span.textContent = t.extraTag;
+        span.textContent = t.extra;
         meta.appendChild(span);
       }
 
@@ -576,22 +479,17 @@
       list.appendChild(li);
     });
 
-    // Hint
-    const hint = $("dayHint");
-    if(isFriday(current)){
-      hint.innerHTML = `✨ Aujourd’hui c’est <b>vendredi</b> : objectifs “vendredi” affichés si ton niveau en prévoit.`;
-    } else if(level === "vine" && dayOfWeek(current) === 3){
-      hint.innerHTML = `✨ Aujourd’hui c’est <b>mercredi</b> : objectif de jeûne affiché pour ce niveau.`;
-    } else if(level === "fire" && isSunday(current)){
-      hint.innerHTML = `🌿 <b>Dimanche</b> : jour du Seigneur (le jeûne n’est pas affiché aujourd’hui).`;
-    } else {
-      hint.innerHTML = `✅ Un pas à la fois. Si tu rates un jour, reprends simplement demain.`;
-    }
+    const dow = dayOfWeek(current);
+    let hint = "✅ Un pas à la fois. Si tu rates un jour, reprends simplement demain.";
+    if(dow === 5) hint = "✨ Aujourd’hui c’est <b>vendredi</b> : objectifs spécifiques affichés.";
+    if(dow === 3 && level === "2") hint = "✨ Aujourd’hui c’est <b>mercredi</b> : jeûne affiché (niveau “cep et sarments”).";
+    if(level === "3" && dow !== 0) hint = "🔥 Niveau “feu dévorant” : jeûne affiché tous les jours sauf dimanche.";
+    if(level === "3" && dow === 0) hint = "🌿 Dimanche : pas de jeûne — garde la joie et l’action de grâce.";
+    $("dayHint").innerHTML = hint;
   }
 
   function renderWeek(){
-    const level = currentLevel();
-    const L = LEVELS[level];
+    const level = lvl();
     const { ws, we, key } = weekKey(current);
     ensureWeek(key, level);
 
@@ -600,7 +498,7 @@
     const list = $("weekTasks");
     list.innerHTML = "";
 
-    (L.weekly || []).forEach(t => {
+    LEVELS[level].weekly.forEach(t => {
       const li = document.createElement("li");
       const cb = document.createElement("input");
       cb.type = "checkbox";
@@ -616,7 +514,6 @@
       div.className = "task";
       const b = document.createElement("b");
       b.textContent = t.label;
-
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent = t.cat;
@@ -630,22 +527,31 @@
     });
   }
 
+  function periodicPeriodsForTask(task){
+    const totalDays = daysBetween(START, END) + 1;
+    return Math.ceil(totalDays / task.everyDays);
+  }
+  function periodIndexForDate(task, date){
+    const offset = daysBetween(START, date);
+    return Math.floor(offset / task.everyDays);
+  }
+
   function renderSeason(){
-    const level = currentLevel();
-    const L = LEVELS[level];
+    const level = lvl();
     ensureSeason(level);
+    ensurePeriodic(level);
 
     const list = $("seasonTasks");
     list.innerHTML = "";
 
-    (L.season || []).forEach(t => {
+    LEVELS[level].season.forEach(t => {
       const li = document.createElement("li");
       const cb = document.createElement("input");
       cb.type = "checkbox";
-      cb.checked = !!state.season[level][t.id];
+      cb.checked = !!state.season[level].season[t.id];
 
       cb.addEventListener("change", () => {
-        state.season[level][t.id] = cb.checked;
+        state.season[level].season[t.id] = cb.checked;
         save(state);
         updateProgress();
       });
@@ -654,7 +560,6 @@
       div.className = "task";
       const b = document.createElement("b");
       b.textContent = t.label;
-
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent = t.cat;
@@ -666,119 +571,129 @@
       li.appendChild(div);
       list.appendChild(li);
     });
-  }
 
-  // --- Progress calculations
-  function tasksForDay(level, dateObj){
-    const L = LEVELS[level];
-    const tasks = [];
-    (L.daily || []).forEach(t => tasks.push({ ...t, scope:"daily" }));
+    LEVELS[level].periodic.forEach(t => {
+      const li = document.createElement("li");
+      const pIdx = periodIndexForDate(t, current);
+      const key = "p" + pIdx;
 
-    if(isFriday(dateObj) && (L.fridayOnly || []).length){
-      (L.fridayOnly || []).forEach(t => tasks.push({ ...t, scope:"extra" }));
-    }
-    if(L.weekdayOnly && Array.isArray(L.weekdayOnly.days) && Array.isArray(L.weekdayOnly.tasks)){
-      if(L.weekdayOnly.days.includes(dayOfWeek(dateObj))){
-        L.weekdayOnly.tasks.forEach(t => tasks.push({ ...t, scope:"extra" }));
+      if(typeof state.periodic[level].periodic[t.id][key] !== "boolean"){
+        state.periodic[level].periodic[t.id][key] = false;
+        save(state);
       }
-    }
-    if(L.fastingRule && L.fastingRule.enabled){
-      if(!isSunday(dateObj)){
-        const t = L.fastingRule;
-        tasks.push({ id:t.id, label:t.label, cat:t.cat, scope:"extra" });
-      }
-    }
-    return tasks;
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!state.periodic[level].periodic[t.id][key];
+
+      cb.addEventListener("change", () => {
+        state.periodic[level].periodic[t.id][key] = cb.checked;
+        save(state);
+        updateProgress();
+      });
+
+      const div = document.createElement("div");
+      div.className = "task";
+      const totalPeriods = periodicPeriodsForTask(t);
+      const b = document.createElement("b");
+      b.textContent = t.label;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = `${t.cat} · Période ${pIdx+1}/${totalPeriods} (tous les ${t.everyDays} jours)`;
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = "Périodique";
+      meta.appendChild(span);
+
+      div.appendChild(b);
+      div.appendChild(meta);
+
+      li.appendChild(cb);
+      li.appendChild(div);
+      list.appendChild(li);
+    });
   }
 
   function todayProgress(){
-    const level = currentLevel();
+    const level = lvl();
     const iso = toISODate(current);
     ensureDay(iso, level);
 
-    const list = tasksForDay(level, current);
-    let total = list.length, done = 0;
-
-    list.forEach(t => {
-      if(t.scope === "daily"){
-        if(state.days[iso][level].daily[t.id]) done++;
-      } else {
-        if(state.days[iso][level].extra[t.id]) done++;
-      }
+    const tasks = tasksTodayFor(level, current);
+    let done = 0;
+    tasks.forEach(t => {
+      const v = (t.scope === "daily") ? state.days[iso][level].daily[t.id] : state.days[iso][level].weekdayOnly[t.id];
+      if(v) done++;
     });
-
-    return { done, total, pct: pct(done,total) };
+    return { done, total: tasks.length, pct: pct(done, tasks.length) };
   }
 
   function weekProgress(){
-    const level = currentLevel();
-    const L = LEVELS[level];
+    const level = lvl();
     const { ws, key } = weekKey(current);
     ensureWeek(key, level);
 
     let total = 0, done = 0;
 
     for(let i=0;i<7;i++){
-      const d = addDays(ws, i);
+      const d = new Date(ws); d.setDate(ws.getDate()+i); d.setHours(0,0,0,0);
       const iso = toISODate(d);
       if(!inRangeISO(iso)) continue;
-      ensureDay(iso, level);
 
-      const list = tasksForDay(level, d);
-      total += list.length;
-      list.forEach(t => {
-        if(t.scope === "daily"){
-          if(state.days[iso][level].daily[t.id]) done++;
-        } else {
-          if(state.days[iso][level].extra[t.id]) done++;
-        }
+      ensureDay(iso, level);
+      const tasks = tasksTodayFor(level, d);
+      total += tasks.length;
+      tasks.forEach(t => {
+        const v = (t.scope === "daily") ? state.days[iso][level].daily[t.id] : state.days[iso][level].weekdayOnly[t.id];
+        if(v) done++;
       });
     }
 
-    // weekly tasks
-    total += (L.weekly || []).length;
-    (L.weekly || []).forEach(t => { if(state.weeks[key][level].weekly[t.id]) done++; });
+    total += LEVELS[level].weekly.length;
+    LEVELS[level].weekly.forEach(t => { if(state.weeks[key][level].weekly[t.id]) done++; });
 
     return { done, total, pct: pct(done,total) };
   }
 
   function seasonProgress(){
-    const level = currentLevel();
-    const L = LEVELS[level];
+    const level = lvl();
     ensureSeason(level);
+    ensurePeriodic(level);
 
     let total = 0, done = 0;
 
-    // daily + extras across season
     for(let d=new Date(START); d<=END; d=addDays(d,1)){
       const iso = toISODate(d);
       ensureDay(iso, level);
-
-      const list = tasksForDay(level, d);
-      total += list.length;
-      list.forEach(t => {
-        if(t.scope === "daily"){
-          if(state.days[iso][level].daily[t.id]) done++;
-        } else {
-          if(state.days[iso][level].extra[t.id]) done++;
-        }
+      const tasks = tasksTodayFor(level, d);
+      total += tasks.length;
+      tasks.forEach(t => {
+        const v = (t.scope === "daily") ? state.days[iso][level].daily[t.id] : state.days[iso][level].weekdayOnly[t.id];
+        if(v) done++;
       });
     }
 
-    // weekly tasks across distinct weeks
     const seenWeeks = new Set();
     for(let d=new Date(START); d<=END; d=addDays(d,1)){
       const wk = weekKey(d).key;
       if(seenWeeks.has(wk)) continue;
       seenWeeks.add(wk);
       ensureWeek(wk, level);
-      total += (L.weekly || []).length;
-      (L.weekly || []).forEach(t => { if(state.weeks[wk][level].weekly[t.id]) done++; });
+      total += LEVELS[level].weekly.length;
+      LEVELS[level].weekly.forEach(t => { if(state.weeks[wk][level].weekly[t.id]) done++; });
     }
 
-    // season tasks
-    total += (L.season || []).length;
-    (L.season || []).forEach(t => { if(state.season[level][t.id]) done++; });
+    total += LEVELS[level].season.length;
+    LEVELS[level].season.forEach(t => { if(state.season[level].season[t.id]) done++; });
+
+    LEVELS[level].periodic.forEach(t => {
+      const n = periodicPeriodsForTask(t);
+      total += n;
+      for(let i=0;i<n;i++){
+        if(!!state.periodic[level].periodic[t.id]["p"+i]) done++;
+      }
+    });
 
     return { done, total, pct: pct(done,total) };
   }
@@ -806,16 +721,13 @@
     updateProgress();
   }
 
-  // --- Level select
   function applyLevelFromUI(){
-    const lvl = $("levelSelect").value;
-    if(!LEVELS[lvl]) return;
-    state.level = lvl;
+    const v = parseInt($("levelSelect").value,10);
+    state.level = (v===1||v===2||v===3) ? v : 1;
     save(state);
     renderAll();
   }
 
-  // --- Nav
   $("prevDay").addEventListener("click", () => {
     if(current <= START) return;
     current = addDays(current, -1);
@@ -831,164 +743,65 @@
     renderAll();
   });
 
-  // --- Reset day/week
   $("resetDay").addEventListener("click", () => {
-    const level = currentLevel();
+    const level = lvl();
     const iso = toISODate(current);
     ensureDay(iso, level);
-
-    // reset keys known for that day (daily + extra that might appear)
-    const L = LEVELS[level];
-    (L.daily || []).forEach(t => state.days[iso][level].daily[t.id] = false);
-
-    // reset extra keys that exist
-    Object.keys(state.days[iso][level].extra || {}).forEach(k => state.days[iso][level].extra[k] = false);
-
+    const tasks = tasksTodayFor(level, current);
+    tasks.forEach(t => {
+      if(t.scope === "daily") state.days[iso][level].daily[t.id] = false;
+      else state.days[iso][level].weekdayOnly[t.id] = false;
+    });
     save(state);
     renderAll();
   });
 
   $("resetWeek").addEventListener("click", () => {
-    const level = currentLevel();
+    const level = lvl();
     const { key } = weekKey(current);
     ensureWeek(key, level);
-    const L = LEVELS[level];
-    (L.weekly || []).forEach(t => state.weeks[key][level].weekly[t.id] = false);
+    LEVELS[level].weekly.forEach(t => state.weeks[key][level].weekly[t.id] = false);
     save(state);
     renderAll();
   });
 
-  // --- Double confirm Reset All (modal + typed word)
+  // --- Double verification reset all
   const modal = $("resetModal");
-  const input = $("resetConfirmInput");
-  const btnDo = $("resetDoIt");
-  let stage = 0; // 0 initial, 1 continued
+  const resetInput = $("resetInput");
+  const confirmReset = $("confirmReset");
 
   function openResetModal(){
-    stage = 0;
-    input.value = "";
-    btnDo.setAttribute("aria-disabled","true");
-    $("resetContinue").classList.remove("hidden");
-    btnDo.classList.add("hidden");
-    modal.classList.add("show");
-    input.focus();
+    resetInput.value = "";
+    confirmReset.setAttribute("aria-disabled","true");
+    modal.classList.remove("hidden");
+    setTimeout(() => resetInput.focus(), 50);
   }
-  function closeResetModal(){
-    modal.classList.remove("show");
-  }
+  function closeResetModal(){ modal.classList.add("hidden"); }
 
   $("resetAll").addEventListener("click", openResetModal);
-  $("resetCancel").addEventListener("click", closeResetModal);
+  $("cancelReset").addEventListener("click", closeResetModal);
 
-  $("resetContinue").addEventListener("click", () => {
-    stage = 1;
-    $("resetContinue").classList.add("hidden");
-    btnDo.classList.remove("hidden");
-    input.focus();
-    validateResetInput();
+  resetInput.addEventListener("input", () => {
+    const ok = resetInput.value.trim().toUpperCase() === "RESET";
+    confirmReset.setAttribute("aria-disabled", ok ? "false" : "true");
   });
 
-  function validateResetInput(){
-    const ok = stage === 1 && input.value.trim().toUpperCase() === "EFFACER";
-    btnDo.setAttribute("aria-disabled", ok ? "false" : "true");
-  }
-  input.addEventListener("input", validateResetInput);
-
-  btnDo.addEventListener("click", () => {
-    if(btnDo.getAttribute("aria-disabled") === "true") return;
+  confirmReset.addEventListener("click", () => {
+    if(confirmReset.getAttribute("aria-disabled") === "true") return;
+    const ok = confirm("Dernière vérification : effacer toutes les données de cette appli sur cet appareil ?");
+    if(!ok) return;
 
     localStorage.removeItem(KEY);
-    state = { level: "mustard", days:{}, weeks:{}, season:{} };
+    state = { level: 1, days:{}, weeks:{}, season:{}, periodic:{} };
     save(state);
-
-    // reset UI
-    $("levelSelect").value = "mustard";
-    current = clampToRange(new Date());
+    $("levelSelect").value = "1";
     closeResetModal();
     renderAll();
   });
 
-  // click outside modal closes
-  modal.addEventListener("click", (e) => {
-    if(e.target === modal) closeResetModal();
-  });
-
-  // --- Mode animateur
-  function setAnimatorUI(on){ $("animatorPanel").classList.toggle("hidden", !on); }
-  $("animatorToggle").addEventListener("change", () => setAnimatorUI($("animatorToggle").checked));
-
-  function makeShareCode(){
-    const iso = toISODate(current);
-    const dp = todayProgress().pct;
-    const wp = weekProgress().pct;
-    const sp = seasonProgress().pct;
-
-    const payload = { v:2, d: iso, lvl: state.level, p:{ day:dp, week:wp, season:sp } };
-    const json = JSON.stringify(payload);
-    const b64 = btoa(unescape(encodeURIComponent(json)));
-    return "CAREME26:" + b64;
-  }
-
-  function parseShareCode(line){
-    line = (line || "").trim();
-    if(!line || !line.startsWith("CAREME26:")) return null;
-    const b64 = line.slice("CAREME26:".length);
-    try{
-      const json = decodeURIComponent(escape(atob(b64)));
-      const obj = JSON.parse(json);
-      if(!obj || (obj.v !== 2) || !obj.p) return null;
-      if(typeof obj.p.day !== "number" || typeof obj.p.week !== "number" || typeof obj.p.season !== "number") return null;
-      if(!LEVELS[obj.lvl]) return null;
-      return obj;
-    }catch{ return null; }
-  }
-
-  $("makeShareCode").addEventListener("click", () => {
-    $("shareCodeOut").value = makeShareCode();
-  });
-
-  $("computeGroup").addEventListener("click", () => {
-    const lines = $("shareCodesIn").value.split("\n").map(s => s.trim()).filter(Boolean);
-    const parsed = lines.map(parseShareCode).filter(Boolean);
-
-    if(parsed.length === 0){
-      $("groupResult").textContent = "Aucun code valide trouvé. (Ils doivent commencer par CAREME26: …)";
-      return;
-    }
-
-    let sumDay=0, sumWeek=0, sumSeason=0;
-    const levelsCount = { mustard:0, vine:0, fire:0 };
-
-    parsed.forEach(o => {
-      sumDay += o.p.day;
-      sumWeek += o.p.week;
-      sumSeason += o.p.season;
-      levelsCount[o.lvl] += 1;
-    });
-
-    const avgDay = Math.round(sumDay / parsed.length);
-    const avgWeek = Math.round(sumWeek / parsed.length);
-    const avgSeason = Math.round(sumSeason / parsed.length);
-
-    const parts = [];
-    parts.push(`Participants : ${parsed.length}`);
-    parts.push(`Moyenne aujourd’hui : ${avgDay}%`);
-    parts.push(`Moyenne semaine : ${avgWeek}%`);
-    parts.push(`Moyenne Carême : ${avgSeason}%`);
-    parts.push(`Niveaux : Sénevé=${levelsCount.mustard} · Cep=${levelsCount.vine} · Feu=${levelsCount.fire}`);
-
-    $("groupResult").textContent = parts.join(" — ");
-  });
-
-  $("clearGroup").addEventListener("click", () => {
-    $("shareCodesIn").value = "";
-    $("groupResult").textContent = "Aucun calcul pour l’instant.";
-  });
-
-  // --- init
-  $("levelSelect").value = state.level;
+  // init
+  $("levelSelect").value = String(state.level || 1);
   $("levelSelect").addEventListener("change", applyLevelFromUI);
-  setAnimatorUI(false);
 
   save(state);
   current = clampToRange(new Date());
