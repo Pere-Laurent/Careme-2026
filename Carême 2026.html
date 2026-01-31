@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carême 2026 – Objectifs</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e8eefc; --muted:#a7b4d6;
+      --accent:#7aa2ff; --ok:#4ade80; --warn:#fbbf24;
+      --line:rgba(255,255,255,.10);
+    }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#070b14,var(--bg)); color:var(--text); }
+    .wrap{ max-width:860px; margin:0 auto; padding:18px; }
+    .card{ background:rgba(17,26,46,.88); border:1px solid rgba(122,162,255,.15);
+      border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+    h1{ font-size:20px; margin:0 0 8px; }
+    h2{ font-size:14px; margin:14px 0 8px; color:var(--muted); font-weight:650; }
+    .sub{ color:var(--muted); font-size:13px; margin:0 0 12px; line-height:1.35; }
+    .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    .pill{ font-size:12px; color:var(--muted); border:1px solid var(--line); padding:6px 10px; border-radius:999px; }
+    .btn{ background:rgba(122,162,255,.14); color:var(--text); border:1px solid rgba(122,162,255,.35);
+      padding:10px 12px; border-radius:12px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+    .btn:active{ transform:translateY(1px); }
+    .btn[aria-disabled="true"]{ opacity:.45; pointer-events:none; }
+    .btn.secondary{ background:rgba(255,255,255,.08); border:1px solid var(--line); }
+    .btn.warn{ background:rgba(251,191,36,.10); border:1px solid rgba(251,191,36,.35); }
+    .progress{ width:100%; height:10px; background:rgba(255,255,255,.10); border-radius:999px; overflow:hidden; }
+    .bar{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--ok)); transition:width .25s ease; }
+    .grid{ display:grid; gap:12px; }
+    @media (min-width: 820px){ .grid{ grid-template-columns:1.1fr .9fr; } }
+
+    ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+    li{ display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:12px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); }
+    input[type="checkbox"]{ transform:scale(1.25); margin-top:2px; }
+    .task{ flex:1; }
+    .task b{ display:block; font-weight:650; }
+    .meta{ color:var(--muted); font-size:12px; margin-top:2px; }
+    .tag{ display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-left:6px; }
+
+    .section{ padding:12px; border-radius:14px; border:1px solid var(--line); background:rgba(0,0,0,.12); }
+    .foot{ margin-top:10px; color:var(--muted); font-size:12px; line-height:1.35; }
+    .hr{ height:1px; background:var(--line); margin:12px 0; }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="row">
+      <div>
+        <h1>Carême 2026 – Objectifs</h1>
+        <p class="sub" id="dateLabel"></p>
+      </div>
+      <div class="pill" id="rangeLabel"></div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <div style="flex:1; min-width:260px">
+        <div class="row" style="justify-content:space-between; margin-bottom:8px">
+          <span class="pill">Aujourd’hui : <b id="dayPct">0%</b></span>
+          <span class="pill">Semaine : <b id="weekPct">0%</b></span>
+          <span class="pill">Carême : <b id="seasonPct">0%</b></span>
+        </div>
+        <div class="progress"><div class="bar" id="dayBar"></div></div>
+        <div class="progress" style="margin-top:8px"><div class="bar" id="weekBar"></div></div>
+        <div class="progress" style="margin-top:8px"><div class="bar" id="seasonBar"></div></div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <button class="btn secondary" id="prevDay">← Jour</button>
+        <button class="btn secondary" id="today">Aujourd’hui</button>
+        <button class="btn secondary" id="nextDay">Jour →</button>
+        <a class="btn" id="aelfLink" target="_blank" rel="noopener">📖 Évangile du jour (AELF)</a>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="grid">
+      <div class="section">
+        <h2>Objectifs du jour</h2>
+        <ul id="todayTasks"></ul>
+
+        <div class="foot">
+          ✅ Tes coches sont enregistrées sur cet appareil (pas de compte).<br/>
+          ℹ️ Le vendredi, l’appli ajoute automatiquement Jeûne + Abstinence.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Objectifs de la semaine</h2>
+        <p class="sub" id="weekLabel" style="margin-bottom:10px"></p>
+        <ul id="weekTasks"></ul>
+
+        <div class="hr"></div>
+
+        <h2>Avant Pâques</h2>
+        <ul id="seasonTasks"></ul>
+
+        <div class="row" style="margin-top:12px; justify-content:flex-start">
+          <button class="btn warn" id="resetDay">Réinitialiser le jour</button>
+          <button class="btn warn" id="resetWeek">Réinitialiser la semaine</button>
+          <button class="btn warn" id="resetAll">Tout réinitialiser</button>
+        </div>
+
+        <div class="foot">
+          “Semaine” = lundi → dimanche (comme l’appli précédente).
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- Période Carême 2026 (verrouillée)
+  const START = new Date("2026-02-18T00:00:00"); // Mercredi des Cendres
+  const END   = new Date("2026-04-05T00:00:00"); // Dimanche de Pâques
+
+  // --- AELF URL (messe du jour)
+  function aelfUrl(iso){ return `https://www.aelf.org/${iso}/romain/messe`; }
+
+  // --- Objectifs (fixés comme demandé)
+  const DAILY = [
+    { id:"oraison", label:"Oraison : 15 minutes", cat:"Discipline spirituelle" },
+    { id:"chapelet", label:"Chapelet : au moins une dizaine", cat:"Discipline spirituelle" },
+    { id:"lecture", label:"Lecture spirituelle : Évangile ou liturgie du jour", cat:"Discipline spirituelle" },
+    { id:"sobriete", label:"Sobriété numérique : pas de réseaux sociaux/vidéos après 21h", cat:"Ascèse" },
+    { id:"sommeil", label:"Sommeil : viser au moins 7h", cat:"Ascèse" },
+  ];
+
+  // Ajout automatique le vendredi (jour précis)
+  const FRIDAY_ONLY = [
+    { id:"jeune", label:"Jeûne (vendredi)", cat:"Ascèse" },
+    { id:"abstinence", label:"Abstinence de viande (vendredi)", cat:"Ascèse" },
+  ];
+
+  // Une fois dans la semaine
+  const WEEKLY = [
+    { id:"aumone", label:"Aumône : 1 geste concret", cat:"Charité & fraternité" },
+    { id:"fraternite", label:"Fraternité : partager 1x son cheminement", cat:"Charité & fraternité" },
+  ];
+
+  // Une fois sur le Carême
+  const SEASON = [
+    { id:"confession", label:"Confession : au moins 1 fois avant Pâques", cat:"Discipline spirituelle" },
+  ];
+
+  const KEY = "careme_2026_v1";
+  const $ = (id) => document.getElementById(id);
+
+  // --- Helpers dates
+  function clampToRange(d){
+    const x = new Date(d); x.setHours(0,0,0,0);
+    if(x < START) return new Date(START);
+    if(x > END) return new Date(END);
+    return x;
+  }
+  function toISODate(d){
+    const x = new Date(d); x.setHours(0,0,0,0);
+    const yyyy = x.getFullYear();
+    const mm = String(x.getMonth()+1).padStart(2,'0');
+    const dd = String(x.getDate()).padStart(2,'0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  function addDays(d, n){
+    const x = new Date(d); x.setDate(x.getDate()+n); x.setHours(0,0,0,0); return x;
+  }
+  function isFriday(d){ return new Date(d).getDay() === 5; } // 5 = vendredi
+  function startOfWeekMonday(d){
+    const x = new Date(d); x.setHours(0,0,0,0);
+    const day = x.getDay(); // 0 Sun .. 6 Sat
+    const diff = (day === 0 ? -6 : 1 - day);
+    x.setDate(x.getDate()+diff);
+    return x;
+  }
+  function formatFR(d){
+    return new Intl.DateTimeFormat('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' }).format(d);
+  }
+  function formatShortFR(d){
+    return new Intl.DateTimeFormat('fr-FR', { day:'2-digit', month:'2-digit' }).format(d);
+  }
+  function pct(done, total){ return total ? Math.round((done/total)*100) : 0; }
+
+  // --- Storage
+  function load(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch { return {}; }
+  }
+  function save(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
+
+  // state schema:
+  // state.days[iso] = { daily:{id:bool}, friday:{id:bool} }
+  // state.weeks[weekIsoMonday] = { weekly:{id:bool} }
+  // state.season = { confession: bool }
+  let state = load();
+  if(!state.days) state.days = {};
+  if(!state.weeks) state.weeks = {};
+  if(!state.season) state.season = { confession:false };
+
+  function ensureDay(iso){
+    if(!state.days[iso]) state.days[iso] = { daily:{}, friday:{} };
+    DAILY.forEach(t => { if(typeof state.days[iso].daily[t.id] !== "boolean") state.days[iso].daily[t.id] = false; });
+    FRIDAY_ONLY.forEach(t => { if(typeof state.days[iso].friday[t.id] !== "boolean") state.days[iso].friday[t.id] = false; });
+  }
+  function ensureWeek(weekIso){
+    if(!state.weeks[weekIso]) state.weeks[weekIso] = { weekly:{} };
+    WEEKLY.forEach(t => { if(typeof state.weeks[weekIso].weekly[t.id] !== "boolean") state.weeks[weekIso].weekly[t.id] = false; });
+  }
+
+  function inRangeISO(iso){
+    const d = new Date(iso+"T00:00:00");
+    return d >= START && d <= END;
+  }
+
+  // --- Current day
+  let current = clampToRange(new Date());
+
+  function weekKeysForDisplay(dayDate){
+    const ws = startOfWeekMonday(dayDate);
+    const we = addDays(ws, 6);
+    return { ws, we, key: toISODate(ws) };
+  }
+
+  // --- Render lists
+  function renderToday(){
+    const iso = toISODate(current);
+    ensureDay(iso);
+
+    const list = $("todayTasks");
+    list.innerHTML = "";
+
+    const tasks = [];
+    DAILY.forEach(t => tasks.push({ ...t, scope:"daily" }));
+    if(isFriday(current)) FRIDAY_ONLY.forEach(t => tasks.push({ ...t, scope:"friday", extra:"Vendredi" }));
+
+    tasks.forEach(t => {
+      const li = document.createElement("li");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = t.scope === "daily" ? state.days[iso].daily[t.id] : state.days[iso].friday[t.id];
+      cb.addEventListener("change", () => {
+        if(t.scope === "daily") state.days[iso].daily[t.id] = cb.checked;
+        else state.days[iso].friday[t.id] = cb.checked;
+        save(state);
+        updateProgress();
+      });
+
+      const div = document.createElement("div");
+      div.className = "task";
+
+      const b = document.createElement("b");
+      b.textContent = t.label;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = t.cat;
+      if(t.extra){
+        const span = document.createElement("span");
+        span.className = "tag";
+        span.textContent = t.extra;
+        meta.appendChild(span);
+      }
+
+      div.appendChild(b);
+      div.appendChild(meta);
+
+      li.appendChild(cb);
+      li.appendChild(div);
+      list.appendChild(li);
+    });
+  }
+
+  function renderWeek(){
+    const { ws, we, key } = weekKeysForDisplay(current);
+    ensureWeek(key);
+
+    $("weekLabel").textContent = `Semaine : ${formatShortFR(ws)} → ${formatShortFR(we)}`;
+
+    const list = $("weekTasks");
+    list.innerHTML = "";
+
+    WEEKLY.forEach(t => {
+      const li = document.createElement("li");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = state.weeks[key].weekly[t.id];
+      cb.addEventListener("change", () => {
+        state.weeks[key].weekly[t.id] = cb.checked;
+        save(state);
+        updateProgress();
+      });
+
+      const div = document.createElement("div");
+      div.className = "task";
+
+      const b = document.createElement("b");
+      b.textContent = t.label;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = t.cat;
+
+      div.appendChild(b);
+      div.appendChild(meta);
+
+      li.appendChild(cb);
+      li.appendChild(div);
+      list.appendChild(li);
+    });
+  }
+
+  function renderSeason(){
+    const list = $("seasonTasks");
+    list.innerHTML = "";
+
+    SEASON.forEach(t => {
+      const li = document.createElement("li");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!state.season[t.id];
+      cb.addEventListener("change", () => {
+        state.season[t.id] = cb.checked;
+        save(state);
+        updateProgress();
+      });
+
+      const div = document.createElement("div");
+      div.className = "task";
+
+      const b = document.createElement("b");
+      b.textContent = t.label;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = t.cat;
+
+      div.appendChild(b);
+      div.appendChild(meta);
+
+      li.appendChild(cb);
+      li.appendChild(div);
+      list.appendChild(li);
+    });
+  }
+
+  // --- Progress calculations
+  function todayProgress(){
+    const iso = toISODate(current);
+    ensureDay(iso);
+    let total = DAILY.length + (isFriday(current) ? FRIDAY_ONLY.length : 0);
+    let done = 0;
+    DAILY.forEach(t => { if(state.days[iso].daily[t.id]) done++; });
+    if(isFriday(current)) FRIDAY_ONLY.forEach(t => { if(state.days[iso].friday[t.id]) done++; });
+    return { done, total, pct: pct(done,total) };
+  }
+
+  function weekProgress(){
+    const { ws, key } = weekKeysForDisplay(current);
+    ensureWeek(key);
+
+    // jours de la semaine (dans la limite de la période Carême)
+    let total = 0, done = 0;
+    for(let i=0;i<7;i++){
+      const d = addDays(ws, i);
+      const iso = toISODate(d);
+      if(!inRangeISO(iso)) continue;
+      ensureDay(iso);
+
+      total += DAILY.length + (isFriday(d) ? FRIDAY_ONLY.length : 0);
+      DAILY.forEach(t => { if(state.days[iso].daily[t.id]) done++; });
+      if(isFriday(d)) FRIDAY_ONLY.forEach(t => { if(state.days[iso].friday[t.id]) done++; });
+    }
+
+    // + hebdo (aumône, fraternité)
+    total += WEEKLY.length;
+    WEEKLY.forEach(t => { if(state.weeks[key].weekly[t.id]) done++; });
+
+    return { done, total, pct: pct(done,total) };
+  }
+
+  function seasonProgress(){
+    // total = (tâches quotidiennes + vendredis) sur toute la période + weekly (aumône/fraternité) par semaine incluse + confession
+    // Objectif: une barre “Carême” motivante.
+    const start = new Date(START), end = new Date(END);
+    let total = 0, done = 0;
+
+    // Daily + Friday-only
+    for(let d=new Date(start); d<=end; d=addDays(d,1)){
+      const iso = toISODate(d);
+      ensureDay(iso);
+      total += DAILY.length + (isFriday(d) ? FRIDAY_ONLY.length : 0);
+      DAILY.forEach(t => { if(state.days[iso].daily[t.id]) done++; });
+      if(isFriday(d)) FRIDAY_ONLY.forEach(t => { if(state.days[iso].friday[t.id]) done++; });
+    }
+
+    // Weekly tasks: compter pour chaque semaine qui intersecte la période
+    const seenWeeks = new Set();
+    for(let d=new Date(start); d<=end; d=addDays(d,1)){
+      const { key } = weekKeysForDisplay(d);
+      if(seenWeeks.has(key)) continue;
+      seenWeeks.add(key);
+      ensureWeek(key);
+      total += WEEKLY.length;
+      WEEKLY.forEach(t => { if(state.weeks[key].weekly[t.id]) done++; });
+    }
+
+    // Confession
+    total += SEASON.length;
+    SEASON.forEach(t => { if(state.season[t.id]) done++; });
+
+    return { done, total, pct: pct(done,total) };
+  }
+
+  function updateProgress(){
+    const dp = todayProgress();
+    const wp = weekProgress();
+    const sp = seasonProgress();
+
+    $("dayPct").textContent = `${dp.pct}%`;
+    $("weekPct").textContent = `${wp.pct}%`;
+    $("seasonPct").textContent = `${sp.pct}%`;
+
+    $("dayBar").style.width = `${dp.pct}%`;
+    $("weekBar").style.width = `${wp.pct}%`;
+    $("seasonBar").style.width = `${sp.pct}%`;
+  }
+
+  // --- Header / Links / Navigation
+  function updateHeader(){
+    const iso = toISODate(current);
+
+    $("dateLabel").textContent = formatFR(current);
+    $("rangeLabel").textContent = `Du ${formatShortFR(START)} au ${formatShortFR(END)} (Carême 2026)`;
+
+    const link = $("aelfLink");
+    link.href = aelfUrl(iso);
+    link.textContent = "📖 Évangile du jour (AELF)";
+
+    // nav bounds
+    $("prevDay").setAttribute("aria-disabled", current <= START ? "true" : "false");
+    $("nextDay").setAttribute("aria-disabled", current >= END ? "true" : "false");
+  }
+
+  function renderAll(){
+    current = clampToRange(current);
+    updateHeader();
+    renderToday();
+    renderWeek();
+    renderSeason();
+    updateProgress();
+  }
+
+  // --- Buttons
+  $("prevDay").addEventListener("click", () => {
+    if(current <= START) return;
+    current = addDays(current, -1);
+    renderAll();
+  });
+  $("nextDay").addEventListener("click", () => {
+    if(current >= END) return;
+    current = addDays(current, 1);
+    renderAll();
+  });
+  $("today").addEventListener("click", () => {
+    current = clampToRange(new Date());
+    renderAll();
+  });
+
+  $("resetDay").addEventListener("click", () => {
+    const iso = toISODate(current);
+    ensureDay(iso);
+    DAILY.forEach(t => state.days[iso].daily[t.id] = false);
+    FRIDAY_ONLY.forEach(t => state.days[iso].friday[t.id] = false);
+    save(state);
+    renderAll();
+  });
+
+  $("resetWeek").addEventListener("click", () => {
+    const { key } = weekKeysForDisplay(current);
+    ensureWeek(key);
+    WEEKLY.forEach(t => state.weeks[key].weekly[t.id] = false);
+    save(state);
+    renderAll();
+  });
+
+  $("resetAll").addEventListener("click", () => {
+    localStorage.removeItem(KEY);
+    state = { days:{}, weeks:{}, season:{ confession:false } };
+    save(state);
+    renderAll();
+  });
+
+  // init
+  save(state);
+  renderAll();
+})();
+</script>
+</body>
+</html>
